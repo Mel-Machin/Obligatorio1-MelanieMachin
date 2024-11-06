@@ -81,133 +81,135 @@ public class TarifaView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        }
+            this.menuTarifa();
+        }else {
+            try {
+                System.out.println("Ingrese los datos de la tarifa: ");
+                System.out.println("Fecha de inicio (día-mes-año):");
+                String fechaInicio = scanner.next();
+                Date fecha = formato.parse(fechaInicio);
+                System.out.println("Precio: ");
+                Double precio = scanner.nextDouble();
+                System.out.println("Tipo de habitación: ");
+                Integer tipoHabitacion = scanner.nextInt();
 
-        try {
-            System.out.println("Ingrese los datos de la tarifa: ");
-            System.out.println("Fecha de inicio (día-mes-año):");
-            String fechaInicio = scanner.next();
-            Date fecha = formato.parse(fechaInicio);
-            System.out.println("Precio: ");
-            Double precio = scanner.nextDouble();
-            System.out.println("Tipo de habitación: ");
-            Integer tipoHabitacion = scanner.nextInt();
-
-            Tarifa tarifa = new Tarifa(fecha, precio, tipoHabitacion);
-            boolean tarifaAgregar = this.tarifaController.agregarTarifa(tarifa);
-            if (tarifaAgregar) {
-                System.out.println("Tarifa agregada correctamente.");
-            } else {
-                System.out.println("Error al agregar la tarifa.");
+                Tarifa tarifa = new Tarifa(fecha, precio, tipoHabitacion);
+                boolean tarifaAgregar = this.tarifaController.agregarTarifa(tarifa);
+                if (tarifaAgregar) {
+                    System.out.println("Tarifa agregada correctamente.");
+                } else {
+                    System.out.println("Error al agregar la tarifa.");
+                }
+            } catch (ParseException e) {
+                System.out.println("Error en el formato de la fecha. Por favor, use el formato día-mes-año.");
             }
-        } catch (ParseException e) {
-            System.out.println("Error en el formato de la fecha. Por favor, use el formato día-mes-año.");
         }
-
     }
 
     public void modificarTarifa() {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuTarifa();
+        }else {
+            try {
+                System.out.println("Ingrese el ID de la tarifa a modificar:");
+                int idTarifa = scanner.nextInt();
+                scanner.nextLine();
+
+                Tarifa tarifaActual = tarifaController.obtenerTarifa(idTarifa);
+                if (tarifaActual == null) {
+                    System.out.println("La tarifa con el ID " + idTarifa + " no existe.");
+                    return;
+                }
+
+                System.out.println("Datos actuales de la tarifa:");
+                System.out.println("Fecha de inicio: " + tarifaActual.getFechaInicio());
+                System.out.println("Precio: " + tarifaActual.getPrecio());
+                System.out.println("Tipo de habitación: " + tarifaActual.getIdTipoHabitacion());
+
+
+                System.out.println("Ingrese la nueva fecha de inicio (mes-día-año): ");
+                String nuevaFechaInicio = scanner.nextLine();
+                Date fecha;
+                if (nuevaFechaInicio.isEmpty()) {
+                    fecha = tarifaActual.getFechaInicio();
+                } else {
+                    fecha = formato.parse(nuevaFechaInicio);
+                }
+
+
+                System.out.println("Ingrese el nuevo precio (0 para omitir): ");
+                Double nuevoPrecio = scanner.nextDouble();
+                if (nuevoPrecio == 0) {
+                    nuevoPrecio = tarifaActual.getPrecio();
+                }
+
+                System.out.println("Ingrese el nuevo ID del tipo de habitación (0 para omitir): ");
+                Integer nuevoIdTipoHabitacion = scanner.nextInt();
+                if (nuevoIdTipoHabitacion == 0) {
+                    nuevoIdTipoHabitacion = tarifaActual.getIdTipoHabitacion();
+                }
+                scanner.nextLine();
+                Tarifa tarifaModificada = new Tarifa(fecha, nuevoPrecio, nuevoIdTipoHabitacion);
+                if (tarifaController.modificarTarifa(idTarifa, tarifaModificada)) {
+                    System.out.println("Tarifa modificada con éxito.");
+                } else {
+                    System.out.println("Error al modificar la tarifa.");
+                }
+            } catch (ParseException e) {
+                System.out.println("Error en el formato de la fecha. Por favor, use el formato día-mes-año.");
+                e.printStackTrace();
+            }
         }
-
-        try {
-            System.out.println("Ingrese el ID de la tarifa a modificar:");
-            int idTarifa = scanner.nextInt();
-            scanner.nextLine();
-
-            Tarifa tarifaActual = tarifaController.obtenerTarifa(idTarifa);
-            if (tarifaActual == null) {
-                System.out.println("La tarifa con el ID " + idTarifa + " no existe.");
-                return;
-            }
-
-            System.out.println("Datos actuales de la tarifa:");
-            System.out.println("Fecha de inicio: " + tarifaActual.getFechaInicio());
-            System.out.println("Precio: " + tarifaActual.getPrecio());
-            System.out.println("Tipo de habitación: " + tarifaActual.getIdTipoHabitacion());
-
-
-            System.out.println("Ingrese la nueva fecha de inicio (mes-día-año): ");
-            String nuevaFechaInicio = scanner.nextLine();
-            Date fecha;
-            if (nuevaFechaInicio.isEmpty()) {
-                fecha = tarifaActual.getFechaInicio();
-            } else {
-                fecha = formato.parse(nuevaFechaInicio);
-            }
-
-
-            System.out.println("Ingrese el nuevo precio (0 para omitir): ");
-            Double nuevoPrecio = scanner.nextDouble();
-            if (nuevoPrecio == 0) {
-                nuevoPrecio = tarifaActual.getPrecio();
-            }
-
-            System.out.println("Ingrese el nuevo ID del tipo de habitación (0 para omitir): ");
-            Integer nuevoIdTipoHabitacion = scanner.nextInt();
-            if (nuevoIdTipoHabitacion == 0) {
-                nuevoIdTipoHabitacion = tarifaActual.getIdTipoHabitacion();
-            }
-            scanner.nextLine();
-            Tarifa tarifaModificada = new Tarifa(fecha, nuevoPrecio, nuevoIdTipoHabitacion);
-            if (tarifaController.modificarTarifa(idTarifa, tarifaModificada)) {
-                System.out.println("Tarifa modificada con éxito.");
-            } else {
-                System.out.println("Error al modificar la tarifa.");
-            }
-        } catch (ParseException e) {
-            System.out.println("Error en el formato de la fecha. Por favor, use el formato día-mes-año.");
-            e.printStackTrace();
-        }
-
-
     }
 
     public void eliminarTarifa() {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
-        if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        }
-
-        System.out.println("Ingrese el ID de la tarifa a eliminar:");
-        int idTarifa = scanner.nextInt();
         scanner.nextLine();
+        if (opcionVolver.equalsIgnoreCase("s")) {
+            this.menuTarifa();
+        }else {
+            System.out.println("Ingrese el ID de la tarifa a eliminar:");
+            int idTarifa = scanner.nextInt();
+            scanner.nextLine();
 
-        System.out.println("¿Está seguro de que desea eliminar la tarifa con ID " + idTarifa + "? (s/n)");
-        String confirmacion = scanner.nextLine();
+            System.out.println("¿Está seguro de que desea eliminar la tarifa con ID " + idTarifa + "? (s/n)");
+            String confirmacion = scanner.nextLine();
 
-        if (confirmacion.equalsIgnoreCase("s")) {
-            if (tarifaController.eliminarTarifa(idTarifa)) {
-                System.out.println("Tarifa eliminada con éxito.");
+            if (confirmacion.equalsIgnoreCase("s")) {
+                if (tarifaController.eliminarTarifa(idTarifa)) {
+                    System.out.println("Tarifa eliminada con éxito.");
+                } else {
+                    System.out.println("Error al eliminar la tarifa. Es posible que no exista o que ya haya sido eliminada.");
+                }
             } else {
-                System.out.println("Error al eliminar la tarifa. Es posible que no exista o que ya haya sido eliminada.");
+                System.out.println("Eliminación cancelada.");
             }
-        } else {
-            System.out.println("Eliminación cancelada.");
         }
     }
 
     public void obtenerTarifas() {
-
-        ArrayList<Tarifa> tarifasObtenidas = tarifaController.obtenerTarifas();
-
-        System.out.println("Tarifas registradas:");
-        CrearTabla.mostrarTabla(tarifasObtenidas);
-
-        System.out.println("\nPresione Enter para volver al menú anterior...");
+        System.out.print("¿Desea volver al menú anterior? (s/n): ");
+        String opcionVolver = scanner.next();
         scanner.nextLine();
-    }
+        if (opcionVolver.equalsIgnoreCase("s")) {
+            this.menuTarifa();
+        }else {
+            ArrayList<Tarifa> tarifasObtenidas = tarifaController.obtenerTarifas();
 
+            System.out.println("Tarifas registradas:");
+            CrearTabla.mostrarTabla(tarifasObtenidas);
+
+            System.out.println("\nPresione Enter para volver al menú anterior...");
+            scanner.nextLine();
+        }
+    }
 }
 

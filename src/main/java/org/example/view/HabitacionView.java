@@ -26,7 +26,6 @@ public class HabitacionView {
 
 
     public void menuHabitacion() {
-        Scanner scanner = new Scanner(System.in);
         int opcion;
         boolean continuar = true;
 
@@ -80,9 +79,9 @@ public class HabitacionView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHabitacion();
         } else {
             boolean continuar = true;
             while (continuar) {
@@ -97,6 +96,12 @@ public class HabitacionView {
 
                 switch (opcion) {
                     case 1:
+                        System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                        String opcionVolver1 = scanner.next();
+                        scanner.nextLine();
+                        if (opcionVolver1.equalsIgnoreCase("s")) {
+                            this.menuHabitacion();
+                        } else {
                         boolean bandera = true;
                         while (bandera) {
                             System.out.println("Seleccione el tipo de cama:");
@@ -151,86 +156,93 @@ public class HabitacionView {
                                 bandera = false;
                             }
                         }
+                        }
                         break;
                     case 2:
-                        boolean bandera2 = true;
-                        while (bandera2) {
-                            System.out.println("Ingrese los datos de la característica a continuación: ");
-                            System.out.println("Nombre: ");
-                            String nombre = scanner.nextLine();
+                        System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                        String opcionVolver2 = scanner.next();
+                        scanner.nextLine();
+                        if (opcionVolver2.equalsIgnoreCase("s")) {
+                            this.menuHabitacion();
+                        } else {
+                            boolean bandera2 = true;
+                            while (bandera2) {
+                                System.out.println("Ingrese los datos de la característica a continuación: ");
+                                System.out.println("Nombre: ");
+                                String nombre = scanner.nextLine();
 
-                            System.out.println("Seleccione el tipo de característica:");
-                            System.out.println("1: Vista");
-                            System.out.println("2: Baño");
-                            System.out.println("3: Climatización ");
-                            System.out.println("4: Entretenimiento ");
-                            System.out.println("5: Conectividad ");
-                            System.out.println("6: Seguridad ");
-                            System.out.println("7: Servicios de cortesía");
-                            System.out.println("8: Accesibilidad");
-                            System.out.println("9: Mobiliario adicional");
-                            System.out.println("10: Privacidad");
-                            int opcionTipoCaracteristica = 0;
-                            opcionTipoCaracteristica = scanner.nextInt();
+                                System.out.println("Seleccione el tipo de característica:");
+                                System.out.println("1: Vista");
+                                System.out.println("2: Baño");
+                                System.out.println("3: Climatización ");
+                                System.out.println("4: Entretenimiento ");
+                                System.out.println("5: Conectividad ");
+                                System.out.println("6: Seguridad ");
+                                System.out.println("7: Servicios de cortesía");
+                                System.out.println("8: Accesibilidad");
+                                System.out.println("9: Mobiliario adicional");
+                                System.out.println("10: Privacidad");
+                                int opcionTipoCaracteristica = 0;
+                                opcionTipoCaracteristica = scanner.nextInt();
 
-                            String tipoCaracteristicaSelecionado = "";
+                                String tipoCaracteristicaSelecionado = "";
 
-                            switch (opcionTipoCaracteristica) {
-                                case 1:
-                                    tipoCaracteristicaSelecionado = "Vista";
-                                    break;
-                                case 2:
-                                    tipoCaracteristicaSelecionado = "Baño";
-                                    break;
-                                case 3:
-                                    tipoCaracteristicaSelecionado = "Climatización";
-                                    break;
-                                case 4:
-                                    tipoCaracteristicaSelecionado = "Entretenimiento";
-                                    break;
-                                case 5:
-                                    tipoCaracteristicaSelecionado = "Conectividad";
-                                    break;
-                                case 6:
-                                    tipoCaracteristicaSelecionado = "Seguridad";
-                                    break;
-                                case 7:
-                                    tipoCaracteristicaSelecionado = "Servicios de cortesía";
-                                    break;
-                                case 8:
-                                    tipoCaracteristicaSelecionado = "Accesibilidad";
-                                    break;
-                                case 9:
-                                    tipoCaracteristicaSelecionado = "Mobiliario adicional";
-                                    break;
-                                case 10:
-                                    tipoCaracteristicaSelecionado = "Privacidad";
-                                    break;
-                                default:
-                                    System.out.println("Debe ingresar un tipo de característica válido.");
-                                    break;
-                            }
-                            if (tipoCaracteristicaSelecionado != "") {
-                                boolean estado = caracteristicaController.agregarCaracteristica(nombre, tipoCaracteristicaSelecionado, idHabitacion);
-                                if (estado) {
-                                    System.out.println("Caracteristica agregada correctamente");
+                                switch (opcionTipoCaracteristica) {
+                                    case 1:
+                                        tipoCaracteristicaSelecionado = "Vista";
+                                        break;
+                                    case 2:
+                                        tipoCaracteristicaSelecionado = "Baño";
+                                        break;
+                                    case 3:
+                                        tipoCaracteristicaSelecionado = "Climatización";
+                                        break;
+                                    case 4:
+                                        tipoCaracteristicaSelecionado = "Entretenimiento";
+                                        break;
+                                    case 5:
+                                        tipoCaracteristicaSelecionado = "Conectividad";
+                                        break;
+                                    case 6:
+                                        tipoCaracteristicaSelecionado = "Seguridad";
+                                        break;
+                                    case 7:
+                                        tipoCaracteristicaSelecionado = "Servicios de cortesía";
+                                        break;
+                                    case 8:
+                                        tipoCaracteristicaSelecionado = "Accesibilidad";
+                                        break;
+                                    case 9:
+                                        tipoCaracteristicaSelecionado = "Mobiliario adicional";
+                                        break;
+                                    case 10:
+                                        tipoCaracteristicaSelecionado = "Privacidad";
+                                        break;
+                                    default:
+                                        System.out.println("Debe ingresar un tipo de característica válido.");
+                                        break;
                                 }
+                                if (tipoCaracteristicaSelecionado != "") {
+                                    boolean estado = caracteristicaController.agregarCaracteristica(nombre, tipoCaracteristicaSelecionado, idHabitacion);
+                                    if (estado) {
+                                        System.out.println("Caracteristica agregada correctamente");
+                                    }
 
-                            } else {
-                                System.out.println("Debe ingresar un tipo de caracteristica valido");
+                                } else {
+                                    System.out.println("Debe ingresar un tipo de caracteristica valido");
+                                }
+                                System.out.println("Precione 1 para agregar otra caracteristica");
+                                System.out.println("Precione 0 para terminar");
+                                int opcionBandera2 = scanner.nextInt();
+                                scanner.nextLine();
+                                if (opcionBandera2 == 0) {
+                                    bandera2 = false;
+                                }
                             }
-                            System.out.println("Precione 1 para agregar otra caracteristica");
-                            System.out.println("Precione 0 para terminar");
-                            int opcionBandera2 = scanner.nextInt();
-                            scanner.nextLine();
-                            if (opcionBandera2 == 0) {
-                                bandera2 = false;
-                            }
+
+                            System.out.println("Caracteriostica agregada correctamente.");
                         }
-
-                        System.out.println("Caracteriostica agregada correctamente.");
                         break;
-
                     case 3:
                         continuar = false;
                         break;
@@ -245,9 +257,9 @@ public class HabitacionView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHabitacion();
         } else {
             System.out.println("Ingrese los datos de la habitacion a continuacion.");
             System.out.println("Numero de habitacion: ");
@@ -276,9 +288,9 @@ public class HabitacionView {
     public void modificarHabitacion() {
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHabitacion();
         } else {
             System.out.println("Ingrese el ID de la habitacion a modificar:");
             int idHabitacion = scanner.nextInt();
@@ -330,9 +342,9 @@ public class HabitacionView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHabitacion();
         } else {
             System.out.println("Ingrese el ID de la habitacion a eliminar:");
             int idHabitacion = scanner.nextInt();
@@ -356,10 +368,10 @@ public class HabitacionView {
     public void obtenerHabitaciones() {
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        }else{
+            this.menuHabitacion();
+        } else {
         System.out.println("Seleccione una opción para filtrar las habitaciones:");
         System.out.println("1. Todas");
         System.out.println("2. Reservadas");

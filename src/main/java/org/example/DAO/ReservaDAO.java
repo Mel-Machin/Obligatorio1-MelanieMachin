@@ -1,8 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.connection.ConnectionDB;
-import org.example.model.Reserva;
-import org.example.model.Tarifa;
+import org.example.model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,14 +36,21 @@ public class ReservaDAO {
     public ArrayList<Reserva> obtenerReservas() throws SQLException {
         ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
-        String query = "SELECT * FROM Reserva";
+        String query = "SELECT r.*, h.nombre, h.primerApellido, ho.nombre AS nombreHotel FROM Reserva r INNER JOIN Huesped h ON r.idHuesped = h.idHuesped INNER JOIN Hotel ho ON r.idHotel = ho.idHotel INNER JOIN habitacionreserva hr ON hr.idReserva = r.idReserva INNER JOIN habitacion ha ON hr.idHabitacion = ha.idHabitacion ;";
         ResultSet rs = connectionDB.executeQuery(query);
 
         while (rs != null && rs.next()) {
             Reserva reserva = new Reserva();
             reserva.setIdReserva(rs.getInt("idReserva"));
-            reserva.setIdReserva(rs.getInt("idHuesped"));
-            reserva.setIdReserva(rs.getInt("idHotel"));
+            reserva.setIdHuesped(rs.getInt("idHuesped"));
+            Huesped huesped = new Huesped(null,rs.getString("nombre"),rs.getString("primerApellido"),null,null);
+            reserva.setHuesped(huesped);
+            reserva.setIdHotel(rs.getInt("idHotel"));
+            Hotel hotel = new Hotel(rs.getString("nombreHotel"), null, null);
+            reserva.setHotel(hotel);
+            Habitacion habitacion = new Habitacion(rs.getInt("nroHabitacion"),null, null);
+          //  ArrayList<Habitacion> habitaciones = new HabitacionDAO().obtenerHabitacionesPorReserva(rs.getInt("idReserva"));
+          //  reserva.setHabitaciones(habitaciones);
             reserva.setIdTarifa(rs.getInt("idTarifa"));
             reserva.setEstadoPago(rs.getString("estadoPago"));
             reserva.setFechaReserva(rs.getDate("fechaReserva"));

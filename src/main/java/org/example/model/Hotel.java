@@ -6,11 +6,7 @@ public class Hotel {
 
     private Integer idHotel;
     private String nombre;
-
     private Ciudad ciudad;
-
-
-
     private String codigoCiudad;
 
 
@@ -70,4 +66,8 @@ public class Hotel {
         this.cantidadEstrellas = cantidadEstrellas;
     }
 
+    @Override
+    public String toString(){
+        return this.nombre;
+    }
 }

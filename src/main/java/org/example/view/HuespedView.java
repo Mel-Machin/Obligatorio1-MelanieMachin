@@ -19,7 +19,6 @@ public class HuespedView {
     }
 
     public void menuHuesped() {
-        Scanner scanner = new Scanner(System.in);
         int opcion;
         boolean continuar = true;
 
@@ -74,9 +73,9 @@ public class HuespedView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHuesped();
         } else {
             System.out.println("Ingrese los datos del huésped:");
             System.out.println("Nombre:");
@@ -105,10 +104,10 @@ public class HuespedView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        }else {
+            this.menuHuesped();
+        } else {
             System.out.println("Ingrese el ID del huésped a modificar:");
             int idHuesped = scanner.nextInt();
             scanner.nextLine();
@@ -165,31 +164,46 @@ public class HuespedView {
     }
 
     public void eliminarHuesped() {
-        System.out.println("Ingrese el ID del huésped a eliminar:");
-        int idHuesped = scanner.nextInt();
+
+        System.out.print("¿Desea volver al menú anterior? (s/n): ");
+        String opcionVolver = scanner.next();
         scanner.nextLine();
-
-        System.out.println("¿Está seguro de que desea eliminar el huesped con ID " + idHuesped + "? (s/n)");
-        String confirmacion = scanner.nextLine();
-
-        if (confirmacion.equalsIgnoreCase("s")) {
-            if (huespedController.eliminarHuesped(idHuesped)) {
-                System.out.println("Huesped eliminado con éxito.");
-            } else {
-                System.out.println("Error al eliminar el huésped. Puede que no exista o ya haya sido eliminado.");
-            }
+        if (opcionVolver.equalsIgnoreCase("s")) {
+            this.menuHuesped();
         } else {
-            System.out.println("Eliminación cancelada.");
+            System.out.println("Ingrese el ID del huésped a eliminar:");
+            int idHuesped = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("¿Está seguro de que desea eliminar el huesped con ID " + idHuesped + "? (s/n)");
+            String confirmacion = scanner.nextLine();
+
+            if (confirmacion.equalsIgnoreCase("s")) {
+                if (huespedController.eliminarHuesped(idHuesped)) {
+                    System.out.println("Huesped eliminado con éxito.");
+                } else {
+                    System.out.println("Error al eliminar el huésped. Puede que no exista o ya haya sido eliminado.");
+                }
+            } else {
+                System.out.println("Eliminación cancelada.");
+            }
         }
     }
 
     public void obtenerHuespedes() {
-        ArrayList<Huesped> huespedesObtenidos = huespedController.obtenerHuespedes();
-
-        System.out.println("Huéspedes registrados:");
-        CrearTabla.mostrarTabla(huespedesObtenidos);
-
-        System.out.println("\nPresione Enter para volver al menú anterior...");
+        System.out.print("¿Desea volver al menú anterior? (s/n): ");
+        String opcionVolver = scanner.next();
         scanner.nextLine();
+        if (opcionVolver.equalsIgnoreCase("s")) {
+            this.menuHuesped();
+        } else {
+            ArrayList<Huesped> huespedesObtenidos = huespedController.obtenerHuespedes();
+
+            System.out.println("Huéspedes registrados:");
+            CrearTabla.mostrarTabla(huespedesObtenidos);
+
+            System.out.println("\nPresione Enter para volver al menú anterior...");
+            scanner.nextLine();
+        }
     }
 }

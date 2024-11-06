@@ -96,45 +96,79 @@ public class HotelView {
 
             switch (subOpcion) {
                 case 1:
-                    this.obtenerHoteles();
-                    System.out.print("Ingrese la ciudad : ");
-                    String ciudadFiltro = scanner.nextLine();
-                    this.filtrarHoteles("", ciudadFiltro, 0);
+                    System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                    String opcionVolver = scanner.next();
+                    scanner.nextLine();
+                    if (opcionVolver.equalsIgnoreCase("s")) {
+                        this.menuHotel();
+                    } else {
+                        System.out.print("Ingrese la ciudad : ");
+                        String ciudadFiltro = scanner.nextLine();
+                        this.filtrarHoteles("", ciudadFiltro, 0);
+                    }
                     break;
                 case 2:
-                    hotelController.obtenerHoteles();
-                    System.out.print("Ingrese el nombre: ");
-                    String nombreFiltro = scanner.nextLine();
-                    this.filtrarHoteles(nombreFiltro, "", 0);
+                    System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                    String opcionVolver2 = scanner.next();
+                    scanner.nextLine();
+                    if (opcionVolver2.equalsIgnoreCase("s")) {
+                        this.menuHotel();
+                    } else {
+                        System.out.print("Ingrese el nombre: ");
+                        String nombreFiltro = scanner.nextLine();
+                        this.filtrarHoteles(nombreFiltro, "", 0);
+                    }
                     break;
                 case 3:
-                    this.obtenerHoteles();
-                    consultarHotelPorFechaDisponible();
+                    System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                    String opcionVolver3 = scanner.next();
+                    scanner.nextLine();
+                    if (opcionVolver3.equalsIgnoreCase("s")) {
+                        this.menuHotel();
+                    } else {
+                        consultarHotelPorFechaDisponible();
+                    }
                     break;
                 case 4:
-                    this.obtenerHoteles();
-                    System.out.print("Ingrese la categoría: ");
-                    while (!scanner.hasNextInt()) {
-                        System.out.println("Por favor, ingresa un número válido.");
-                        scanner.next();
-                    }
-                    int categoriaFiltro = scanner.nextInt();
+                    System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                    String opcionVolver4 = scanner.next();
                     scanner.nextLine();
-                    this.filtrarHoteles("", "", categoriaFiltro);
+                    if (opcionVolver4.equalsIgnoreCase("s")) {
+                        this.menuHotel();
+                    } else {
+                        System.out.print("Ingrese la categoría: ");
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Por favor, ingresa un número válido.");
+                            scanner.next();
+                        }
+                        int categoriaFiltro = scanner.nextInt();
+                        scanner.nextLine();
+                        this.filtrarHoteles("", "", categoriaFiltro);
+                    }
                     break;
                 case 5:
-                    this.obtenerHoteles();
-                    System.out.print("Ingrese el nombre del hotel (dejar en blanco para omitir): ");
-                    String nombre = scanner.nextLine();
-
-                    System.out.print("Ingrese la ciudad del hotel (dejar en blanco para omitir): ");
-                    String ciudad = scanner.nextLine();
-
-                    System.out.print("Ingrese la ciudad del hotel (dejar en blanco para omitir): ");
-                    int categoria = scanner.hasNextInt() ? scanner.nextInt() : 0;
+                    System.out.print("¿Desea volver al menú anterior? (s/n): ");
+                    String opcionVolver5 = scanner.next();
                     scanner.nextLine();
+                    if (opcionVolver5.equalsIgnoreCase("s")) {
+                        this.menuHotel();
+                    } else {
+                        System.out.print("Ingrese el nombre del hotel (dejar en blanco para omitir): ");
+                        String nombre = scanner.nextLine();
 
-                    this.filtrarHoteles(nombre, ciudad, categoria);
+                        System.out.print("Ingrese la ciudad del hotel (dejar en blanco para omitir): ");
+                        String ciudad = scanner.nextLine();
+
+                        System.out.print("Ingrese la categoría: (insertar 0 para omitir): ");
+                        int categoria = scanner.hasNextInt() ? scanner.nextInt() : 0;
+                        scanner.nextLine();
+
+                        if(nombre.isEmpty() && ciudad.isEmpty() && categoria == 0){
+                            this.obtenerHoteles();
+                        }else {
+                            this.filtrarHoteles(nombre, ciudad, categoria);
+                        }
+                    }
                     break;
                 case 0:
                     subMenu = false;
@@ -151,9 +185,9 @@ public class HotelView {
     public void agregarHotel() {
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHotel();
         } else {
             System.out.println("Ingrese los datos del hotel a continuación:");
             System.out.println("Nombre: ");
@@ -178,9 +212,9 @@ public class HotelView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHotel();
         } else {
 
             System.out.print("Ingrese el ID del hotel a modificar: ");
@@ -230,9 +264,9 @@ public class HotelView {
     public void eliminarHotel() {
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
+        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
+            this.menuHotel();
         } else {
             System.out.println("Ingrese el id del hotel a eliminar:");
             int idHotel = scanner.nextInt();
@@ -255,29 +289,16 @@ public class HotelView {
 
     public void consultarHotelPorFechaDisponible() {
 
-        System.out.print("¿Desea volver al menú anterior? (s/n): ");
-        String opcionVolver = scanner.next();
-        if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        } else {
             System.out.println("Ingrese la fecha de check-in (año-mes-día): ");
             String fechaInicio = scanner.nextLine();
             System.out.println("Ingrese la fecha de check-out (año-mes-día): ");
             String fechaFin = scanner.nextLine();
             ArrayList<Hotel> hoteles = hotelController.obtenerHotelesEnRangoFechas(fechaInicio, fechaFin);
             CrearTabla.mostrarTabla(hoteles);
-        }
     }
 
     public void filtrarHoteles(String nombre, String ciudad, int categoria) {
 
-        System.out.print("¿Desea volver al menú anterior? (s/n): ");
-        String opcionVolver = scanner.next();
-        if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        } else {
             ArrayList<Hotel> hotelesFiltrados = hotelController.filtroHoteles(nombre, ciudad, categoria);
 
             if (hotelesFiltrados.isEmpty()) {
@@ -288,17 +309,10 @@ public class HotelView {
             }
             System.out.println("\nPresione Enter para volver al menú anterior...");
             scanner.nextLine();
-        }
     }
 
     public void obtenerHoteles() {
 
-        System.out.print("¿Desea volver al menú anterior? (s/n): ");
-        String opcionVolver = scanner.next();
-        if (opcionVolver.equalsIgnoreCase("s")) {
-            IndexView indexView = new IndexView();
-            indexView.menuPrincipal();
-        } else {
             ArrayList<Hotel> hotelesObtenidos = hotelController.obtenerHoteles();
 
             System.out.println("Hoteles registrados:");
@@ -306,6 +320,5 @@ public class HotelView {
 
             System.out.println("\nPresione Enter para volver al menú anterior...");
             scanner.nextLine();
-        }
     }
 }

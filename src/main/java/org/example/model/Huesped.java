@@ -66,4 +66,9 @@ public class Huesped {
         this.segundoApellido = segundoApellido;
         this.telefono = telefono;
     }
+
+    @Override
+    public String toString(){
+        return this.nombre + " "+ this.primerApellido;
+    }
 }

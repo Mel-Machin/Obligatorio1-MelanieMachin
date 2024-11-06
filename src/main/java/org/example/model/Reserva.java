@@ -6,7 +6,9 @@ import java.util.Date;
 public class Reserva {
     private Integer idReserva;
     private Integer idHuesped;
+    private Huesped huesped;
     private Integer idHotel;
+    private Hotel hotel;
     private Integer idTarifa;
     private ArrayList<Habitacion> habitaciones;
     private String estadoPago;
@@ -18,12 +20,21 @@ public class Reserva {
     private Integer cantidadPersonas;
     private String observacion;
 
+
     public Integer getIdReserva() {
         return idReserva;
     }
 
     public void setIdReserva(Integer idReserva) {
         this.idReserva = idReserva;
+    }
+
+    public void setHuesped(Huesped huesped) {
+        this.huesped = huesped;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public String getObservacion() {

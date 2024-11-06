@@ -82,17 +82,17 @@ public class HotelDAO {
 
 
         if (nombre != null && !nombre.isEmpty()) {
-            query += " AND nombre LIKE ?";
+            query += " AND h.nombre LIKE ?";
             params.add("%" + nombre + "%");
         }
 
         if (ciudad != null && !ciudad.isEmpty()) {
-            query += " AND codigoCiudad LIKE ?";
+            query += " AND c.nombre LIKE ?";
             params.add("%" + ciudad + "%");
         }
 
         if (categoria > 0) {
-            query += " AND cantidadEstrellas = ?";
+            query += " AND h.cantidadEstrellas = ?";
             params.add(categoria);
         }
 
@@ -140,8 +140,6 @@ public class HotelDAO {
         }
         return hoteles;
     }
-
-
 }
 
 

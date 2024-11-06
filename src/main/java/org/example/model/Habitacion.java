@@ -63,6 +63,13 @@ public class Habitacion {
     public void setCaracteristicas(ArrayList<Caracteristica> caracteristicas) {
         this.caracteristicas = caracteristicas;
     }
+    public TipoHabitacion getTipoHabitacion() {
+        return tipoHabitacion;
+    }
+
+    public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+        this.tipoHabitacion = tipoHabitacion;
+    }
 
     public Habitacion() {
     }
@@ -73,11 +80,8 @@ public class Habitacion {
         this.idTipoHabitacion = idTipoHabitacion;
     }
 
-    public TipoHabitacion getTipoHabitacion() {
-        return tipoHabitacion;
-    }
-
-    public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
-        this.tipoHabitacion = tipoHabitacion;
+    @Override
+    public String toString(){
+        return this.nroHabitacion.toString();
     }
 }
