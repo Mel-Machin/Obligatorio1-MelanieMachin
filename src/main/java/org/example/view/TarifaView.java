@@ -81,10 +81,10 @@ public class TarifaView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
-        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
         }else {
+
             try {
                 System.out.println("Ingrese los datos de la tarifa: ");
                 System.out.println("Fecha de inicio (día-mes-año):");
@@ -112,7 +112,6 @@ public class TarifaView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
-        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
         }else {
@@ -172,10 +171,10 @@ public class TarifaView {
 
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
-        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
         }else {
+
             System.out.println("Ingrese el ID de la tarifa a eliminar:");
             int idTarifa = scanner.nextInt();
             scanner.nextLine();
@@ -198,10 +197,9 @@ public class TarifaView {
     public void obtenerTarifas() {
         System.out.print("¿Desea volver al menú anterior? (s/n): ");
         String opcionVolver = scanner.next();
-        scanner.nextLine();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
-        }else {
+        } else {
             ArrayList<Tarifa> tarifasObtenidas = tarifaController.obtenerTarifas();
 
             System.out.println("Tarifas registradas:");
