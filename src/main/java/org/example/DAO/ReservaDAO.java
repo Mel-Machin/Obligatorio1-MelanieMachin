@@ -36,7 +36,7 @@ public class ReservaDAO {
     public ArrayList<Reserva> obtenerReservas() throws SQLException {
         ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
-        String query = "SELECT r.*, h.nombre, h.primerApellido, ho.nombre AS nombreHotel FROM Reserva r INNER JOIN Huesped h ON r.idHuesped = h.idHuesped INNER JOIN Hotel ho ON r.idHotel = ho.idHotel INNER JOIN habitacionreserva hr ON hr.idReserva = r.idReserva INNER JOIN habitacion ha ON hr.idHabitacion = ha.idHabitacion ;";
+        String query = "SELECT r.*, h.nombre, h.primerApellido, ho.nombre AS nombreHotel FROM Reserva r INNER JOIN Huesped h ON r.idHuesped = h.idHuesped INNER JOIN Hotel ho ON r.idHotel = ho.idHotel;";
         ResultSet rs = connectionDB.executeQuery(query);
 
         while (rs != null && rs.next()) {
@@ -48,9 +48,8 @@ public class ReservaDAO {
             reserva.setIdHotel(rs.getInt("idHotel"));
             Hotel hotel = new Hotel(rs.getString("nombreHotel"), null, null);
             reserva.setHotel(hotel);
-            Habitacion habitacion = new Habitacion(rs.getInt("nroHabitacion"),null, null);
-          //  ArrayList<Habitacion> habitaciones = new HabitacionDAO().obtenerHabitacionesPorReserva(rs.getInt("idReserva"));
-          //  reserva.setHabitaciones(habitaciones);
+            ArrayList<Habitacion> habitaciones = new HabitacionDAO().obtenerHabitacionesPorReserva(rs.getInt("idReserva"));
+            reserva.setHabitaciones(habitaciones);
             reserva.setIdTarifa(rs.getInt("idTarifa"));
             reserva.setEstadoPago(rs.getString("estadoPago"));
             reserva.setFechaReserva(rs.getDate("fechaReserva"));

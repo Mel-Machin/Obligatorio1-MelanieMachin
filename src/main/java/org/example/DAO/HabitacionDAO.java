@@ -162,4 +162,27 @@ public class HabitacionDAO {
         return obtenerHabitacion(idHabitacion) != null;
     }
 
+    public ArrayList<Habitacion> obtenerHabitacionesPorReserva(int idReserva) throws SQLException {
+
+        ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
+
+        String query = "SELECT ha.* FROM habitacionreserva hr INNER JOIN habitacion ha ON hr.idHabitacion = ha.idHabitacion WHERE hr.idReserva = ?;";
+        ResultSet rs = connectionDB.executeQuery(query, idReserva);
+
+        while (rs != null && rs.next()) {
+            Habitacion habitacion = new Habitacion();
+            habitacion.setIdHabitacion(rs.getInt("idHabitacion"));
+            habitacion.setNroHabitacion(rs.getInt("nroHabitacion"));
+            habitacion.setIdHotel(rs.getInt("idHotel"));
+            habitacion.setIdTipoHabitacion(rs.getInt("idTipoHabitacion"));
+
+            ArrayList<Cama> camas = camaDAO.obtenerCamasPorHabitacion(rs.getInt("idHabitacion"));
+            habitacion.setCamas(camas);
+            ArrayList<Caracteristica> caracteristicas = caracteristicaDAO.obtenerCaracteristicasPorHabitacion(rs.getInt("idHabitacion"));
+            habitacion.setCaracteristicas(caracteristicas);
+
+            habitaciones.add(habitacion);
+        }
+        return habitaciones;
+    }
 }

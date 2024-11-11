@@ -11,15 +11,27 @@ public class TarifaDAO {
     public TarifaDAO(){ this.connectionDB = new ConnectionDB();}
 
     public boolean agregarTarifa(Tarifa tarifa){
-        String query = "INSERT INTO Tarifa (fechaInicio, Precio, idTipoHabitacion) VALUES (?,?,?)";
-        int filasAfectadas = connectionDB.executeUpdate(query, tarifa.getFechaInicio(), tarifa.getPrecio(), tarifa.getIdTipoHabitacion());
-        return filasAfectadas > 0;
+            // Primero, desactivar tarifas vigentes anteriores para el mismo tipo de habitación
+            String desactivarTarifasQuery = "UPDATE Tarifa SET vigente = FALSE WHERE idTipoHabitacion = ? AND vigente = TRUE";
+            connectionDB.executeUpdate(desactivarTarifasQuery, tarifa.getIdTipoHabitacion());
+
+            // Insertar la nueva tarifa
+            String insertarQuery = "INSERT INTO Tarifa (fechaInicio, Precio, idTipoHabitacion, vigente) VALUES (?, ?, ?, TRUE)";
+            int filasAfectadas = connectionDB.executeUpdate(insertarQuery, tarifa.getFechaInicio(), tarifa.getPrecio(), tarifa.getIdTipoHabitacion());
+
+            return filasAfectadas > 0;
     }
 
     public boolean modificarTarifa(int idTarifa, Tarifa tarifa) {
-        String query = "UPDATE Tarifa SET fechaInicio = ?, Precio = ?, idTipoHabitacion = ? WHERE idTarifa = ?";
-        int filasAfectadas = connectionDB.executeUpdate(query,  tarifa.getFechaInicio(), tarifa.getPrecio(), tarifa.getIdTipoHabitacion(), idTarifa);
-        return filasAfectadas > 0;
+            // Desactivar tarifas vigentes anteriores para el mismo tipo de habitación excepto la que estamos actualizando
+            String desactivarTarifasQuery = "UPDATE Tarifa SET vigente = FALSE WHERE idTipoHabitacion = ? AND vigente = TRUE AND idTarifa != ?";
+            connectionDB.executeUpdate(desactivarTarifasQuery, tarifa.getIdTipoHabitacion(), idTarifa);
+
+            // Actualizar la tarifa con los nuevos valores
+            String modificarQuery = "UPDATE Tarifa SET fechaInicio = ?, Precio = ?, idTipoHabitacion = ?, vigente = TRUE WHERE idTarifa = ?";
+            int filasAfectadas = connectionDB.executeUpdate(modificarQuery, tarifa.getFechaInicio(), tarifa.getPrecio(), tarifa.getIdTipoHabitacion(), idTarifa);
+
+            return filasAfectadas > 0;
     }
 
     public boolean eliminarTarifa(int idTarifa) {

@@ -57,6 +57,7 @@ public class HabitacionController {
         }
     }
 
+
     public ArrayList<Habitacion> obtenerHabitaciones(){
         try {
             return habitacionDAO.obtenerHabitaciones();

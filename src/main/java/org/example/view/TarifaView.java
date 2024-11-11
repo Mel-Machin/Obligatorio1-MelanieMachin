@@ -3,7 +3,6 @@ package org.example.view;
 import org.example.controller.TarifaController;
 import org.example.model.ScannerSingleton;
 import org.example.model.Tarifa;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,7 +131,7 @@ public class TarifaView {
                 System.out.println("Tipo de habitación: " + tarifaActual.getIdTipoHabitacion());
 
 
-                System.out.println("Ingrese la nueva fecha de inicio (mes-día-año): ");
+                System.out.println("Ingrese la nueva fecha de inicio (día-mes-año): ");
                 String nuevaFechaInicio = scanner.nextLine();
                 Date fecha;
                 if (nuevaFechaInicio.isEmpty()) {

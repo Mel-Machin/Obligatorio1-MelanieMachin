@@ -61,7 +61,7 @@ public class ReservaView {
                 case 4:
                     this.eliminarReserva();
                     break;
-                case 5:
+                case 0:
                     continuar = false;
                     IndexView indexView = new IndexView();
                     indexView.menuPrincipal();
