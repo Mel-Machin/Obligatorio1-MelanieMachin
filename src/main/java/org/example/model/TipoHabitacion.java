@@ -32,9 +32,6 @@ public class TipoHabitacion {
         return idTarifa;
     }
 
-    public TipoHabitacion() {
-    }
-
     public void setIdTipoHabitacion(Integer idTipoHabitacion) {
         this.idTipoHabitacion = idTipoHabitacion;
     }
@@ -53,5 +50,17 @@ public class TipoHabitacion {
 
     public void setIdTarifa(Integer idTarifa) {
         this.idTarifa = idTarifa;
+    }
+
+    public TipoHabitacion() {
+    }
+
+    public TipoHabitacion(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String toString(){
+        return this.nombre;
     }
 }

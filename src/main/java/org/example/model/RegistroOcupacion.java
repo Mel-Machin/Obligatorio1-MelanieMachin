@@ -10,14 +10,34 @@ public class RegistroOcupacion {
         return idOcupacion;
     }
 
+    public void setIdOcupacion(Integer idOcupacion) {
+        this.idOcupacion = idOcupacion;
+    }
+
+    public void setMedioRegistro(String medioRegistro) {
+        this.medioRegistro = medioRegistro;
+    }
+    public String getMedioRegistro() {
+        return medioRegistro;
+    }
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     public boolean isEstado() {
         return estado;
     }
 
-    public String getMedioRegistro() {
-        return medioRegistro;
-    }
 
     public RegistroOcupacion() {
+    }
+
+    public RegistroOcupacion(String medioRegistro) {
+        this.medioRegistro = medioRegistro;
+    }
+
+    @Override
+    public String toString(){
+        return this.medioRegistro;
     }
 }

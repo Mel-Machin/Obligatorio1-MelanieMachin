@@ -7,6 +7,7 @@ public class Huesped {
     private String segundoApellido;
     private String telefono;
     private Integer idTipoDocumento;
+    private TipoDocumento tipoDocumento;
 
     public Integer getIdHuesped() {
         return idHuesped;
@@ -46,6 +47,14 @@ public class Huesped {
 
     public void setIdTipoDocumento(Integer idTipoDocumento) {
         this.idTipoDocumento = idTipoDocumento;
+    }
+
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
     public String getTelefono() {

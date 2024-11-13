@@ -8,12 +8,10 @@ public class Habitacion {
     private Integer nroHabitacion;
     private Integer idHotel;
     private Integer idTipoHabitacion;
-
-
-
     private TipoHabitacion tipoHabitacion;
     private ArrayList<Cama> camas;
     private ArrayList<Caracteristica> caracteristicas;
+    private RegistroOcupacion medioOcupacion;
 
 
     public Integer getIdHabitacion() {
@@ -69,6 +67,14 @@ public class Habitacion {
 
     public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
         this.tipoHabitacion = tipoHabitacion;
+    }
+
+    public RegistroOcupacion getMedioOcupacion() {
+        return medioOcupacion;
+    }
+
+    public void setMedioOcupacion(RegistroOcupacion medioOcupacion) {
+        this.medioOcupacion = medioOcupacion;
     }
 
     public Habitacion() {

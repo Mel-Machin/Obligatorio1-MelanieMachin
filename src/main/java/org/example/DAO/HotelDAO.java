@@ -16,6 +16,7 @@ public class HotelDAO {
     }
 
 
+    //Alta, Baja y Modificacion
     public boolean agregarHotel(Hotel hotel) {
         String query = "INSERT INTO Hotel (nombre, codigoCiudad, cantidadEstrellas) VALUES(?,?,?)";
         int filasAfectadas =  connectionDB.executeUpdate(query, hotel.getNombre(), hotel.getCodigoCiudad(), hotel.getCantidadEstrellas());
@@ -34,6 +35,7 @@ public class HotelDAO {
         return filasEliminadas > 0; // Retorna true si se eliminó al menos un registro
     }
 
+    //Obtener
     public Hotel obtenerHotel(int id) throws SQLException {
         String query = "SELECT h.*,c.nombre AS nombreCiudad,c.codigoPais FROM Hotel h LEFT JOIN Ciudad c ON c.codigoPostal = h.codigoCiudad WHERE idHotel = ?";
         ResultSet rs = connectionDB.executeQuery(query, id);
@@ -65,7 +67,6 @@ public class HotelDAO {
             hotel.setCiudad(ciudad);
             hotel.setCodigoCiudad(rs.getString("codigoCiudad"));
             hotel.setNombre(rs.getString("nombre"));
-
             hotel.setCantidadEstrellas(rs.getInt("cantidadEstrellas"));
             hoteles.add(hotel);
         }
@@ -117,10 +118,6 @@ public class HotelDAO {
         return hoteles;
     }
 
-    public boolean existeHotel(int id) throws SQLException {
-        return obtenerHotel(id) != null;
-    }
-
     public ArrayList<Hotel> obtenerHotelesEnRangoFechas(String fechaInicio, String fechaFin) throws SQLException{
         String query = "SELECT h.*,c.nombre AS nombreCiudad,c.codigoPais FROM Hotel h LEFT JOIN Ciudad c ON c.codigoPostal = h.codigoCiudad JOIN habitacion h1 ON h.idHotel = h1.idHotel WHERE NOT EXISTS ( SELECT 1 FROM habitacionreserva hr JOIN reserva r ON hr.idReserva = r.idReserva WHERE hr.idHabitacion = h1.idHabitacion AND ( (r.fechaCheckIn < ? AND r.fechaCheckOut > ?) ) ) GROUP BY h.idHotel, h.nombre;";
         ArrayList<Hotel> hoteles = new ArrayList<>();
@@ -134,11 +131,15 @@ public class HotelDAO {
             hotel.setCiudad(ciudad);
             hotel.setCodigoCiudad(rs.getString("codigoCiudad"));
             hotel.setNombre(rs.getString("nombre"));
-
             hotel.setCantidadEstrellas(rs.getInt("cantidadEstrellas"));
             hoteles.add(hotel);
         }
         return hoteles;
+    }
+
+
+    public boolean existeHotel(int id) throws SQLException {
+        return obtenerHotel(id) != null;
     }
 }
 

@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.controller.TarifaController;
 import org.example.model.ScannerSingleton;
 import org.example.model.Tarifa;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class TarifaView {
         String opcionVolver = scanner.next();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
-        }else {
+        } else {
 
             try {
                 System.out.println("Ingrese los datos de la tarifa: ");
@@ -113,7 +114,7 @@ public class TarifaView {
         String opcionVolver = scanner.next();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
-        }else {
+        } else {
             try {
                 System.out.println("Ingrese el ID de la tarifa a modificar:");
                 int idTarifa = scanner.nextInt();
@@ -126,10 +127,9 @@ public class TarifaView {
                 }
 
                 System.out.println("Datos actuales de la tarifa:");
-                System.out.println("Fecha de inicio: " + tarifaActual.getFechaInicio());
-                System.out.println("Precio: " + tarifaActual.getPrecio());
-                System.out.println("Tipo de habitación: " + tarifaActual.getIdTipoHabitacion());
-
+                ArrayList<Tarifa> tarifaTemporal = new ArrayList<Tarifa>();
+                tarifaTemporal.add(tarifaActual);
+                CrearTabla.mostrarTabla(tarifaTemporal);
 
                 System.out.println("Ingrese la nueva fecha de inicio (día-mes-año): ");
                 String nuevaFechaInicio = scanner.nextLine();
@@ -172,7 +172,7 @@ public class TarifaView {
         String opcionVolver = scanner.next();
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuTarifa();
-        }else {
+        } else {
 
             System.out.println("Ingrese el ID de la tarifa a eliminar:");
             int idTarifa = scanner.nextInt();

@@ -1,6 +1,5 @@
 package org.example.view;
 
-import org.example.DAO.CamaDAO;
 import org.example.controller.CamaController;
 import org.example.controller.CaracteristicaController;
 import org.example.controller.HabitacionController;
@@ -102,60 +101,60 @@ public class HabitacionView {
                         if (opcionVolver1.equalsIgnoreCase("s")) {
                             this.menuHabitacion();
                         } else {
-                        boolean bandera = true;
-                        while (bandera) {
-                            System.out.println("Seleccione el tipo de cama:");
-                            System.out.println("1: Individual");
-                            System.out.println("2: Matrimonial");
-                            System.out.println("3: Queen");
-                            System.out.println("4: King");
-                            System.out.println("5: Redonda");
-                            System.out.println("6: Sofá Cama");
-                            System.out.println("7: Litera");
+                            boolean bandera = true;
+                            while (bandera) {
+                                System.out.println("Seleccione el tipo de cama:");
+                                System.out.println("1: Individual");
+                                System.out.println("2: Matrimonial");
+                                System.out.println("3: Queen");
+                                System.out.println("4: King");
+                                System.out.println("5: Redonda");
+                                System.out.println("6: Sofá Cama");
+                                System.out.println("7: Litera");
 
-                            int opcionTipoCama = 0;
-                            opcionTipoCama = scanner.nextInt();
+                                int opcionTipoCama = 0;
+                                opcionTipoCama = scanner.nextInt();
 
-                            String tipoCamaSelecionado = "";
-                            switch (opcionTipoCama) {
-                                case 1:
-                                    tipoCamaSelecionado = "Individual";
-                                    break;
-                                case 2:
-                                    tipoCamaSelecionado = "Matrimonial";
-                                    break;
-                                case 3:
-                                    tipoCamaSelecionado = "Queen";
-                                    break;
-                                case 4:
-                                    tipoCamaSelecionado = "King";
-                                    break;
-                                case 5:
-                                    tipoCamaSelecionado = "Redonda";
-                                    break;
-                                case 6:
-                                    tipoCamaSelecionado = "Sofá Cama";
-                                    break;
-                                case 7:
-                                    tipoCamaSelecionado = "Litera";
-                                    break;
-                                default:
-                                    System.out.println("Debe ingresar un tipo de cama válido.");
-                                    break;
-                            }
-                            if (tipoCamaSelecionado != "") {
-                                boolean estado = camaController.agregarCama(idHabitacion, tipoCamaSelecionado);
-                                if (estado) {
-                                    System.out.println("Cama agregada correctamente.");
+                                String tipoCamaSelecionado = "";
+                                switch (opcionTipoCama) {
+                                    case 1:
+                                        tipoCamaSelecionado = "Individual";
+                                        break;
+                                    case 2:
+                                        tipoCamaSelecionado = "Matrimonial";
+                                        break;
+                                    case 3:
+                                        tipoCamaSelecionado = "Queen";
+                                        break;
+                                    case 4:
+                                        tipoCamaSelecionado = "King";
+                                        break;
+                                    case 5:
+                                        tipoCamaSelecionado = "Redonda";
+                                        break;
+                                    case 6:
+                                        tipoCamaSelecionado = "Sofá Cama";
+                                        break;
+                                    case 7:
+                                        tipoCamaSelecionado = "Litera";
+                                        break;
+                                    default:
+                                        System.out.println("Debe ingresar un tipo de cama válido.");
+                                        break;
+                                }
+                                if (tipoCamaSelecionado != "") {
+                                    boolean estado = camaController.agregarCama(idHabitacion, tipoCamaSelecionado);
+                                    if (estado) {
+                                        System.out.println("Cama agregada correctamente.");
+                                    }
+                                }
+                                System.out.print("Presione 1 para agregar otra cama o 0 para terminar: ");
+                                int opcionBandera = scanner.nextInt();
+                                scanner.nextLine();
+                                if (opcionBandera == 0) {
+                                    bandera = false;
                                 }
                             }
-                            System.out.print("Presione 1 para agregar otra cama o 0 para terminar: ");
-                            int opcionBandera = scanner.nextInt();
-                            scanner.nextLine();
-                            if (opcionBandera == 0) {
-                                bandera = false;
-                            }
-                        }
                         }
                         break;
                     case 2:
@@ -303,10 +302,9 @@ public class HabitacionView {
             }
 
             System.out.println("Datos actuales de la Habitacion: ");
-            System.out.println("Numero de la habitacion: " + habitacionActual.getNroHabitacion());
-            System.out.println("ID hotel: " + habitacionActual.getIdHotel());
-            System.out.println("ID habitacion: " + habitacionActual.getIdTipoHabitacion());
-
+            ArrayList<Habitacion> habitacionTemporal = new ArrayList<Habitacion>();
+            habitacionTemporal.add(habitacionActual);
+            CrearTabla.mostrarTabla(habitacionTemporal);
 
             System.out.println("Ingrese el nuevo numero de la habitacion (0 para omitir): ");
             int nuevoNroHabitacion = scanner.nextInt();
@@ -372,43 +370,48 @@ public class HabitacionView {
         if (opcionVolver.equalsIgnoreCase("s")) {
             this.menuHabitacion();
         } else {
-        System.out.println("Seleccione una opción para filtrar las habitaciones:");
-        System.out.println("1. Todas");
-        System.out.println("2. Reservadas");
-        System.out.println("3. Sin reserva");
-        System.out.println("0. Volver al menú anterior");
+            System.out.println("Seleccione una opción para filtrar las habitaciones:");
+            System.out.println("1. Todas");
+            System.out.println("2. Reservadas");
+            System.out.println("3. Sin reserva");
+            System.out.println("4. Ver habitaciones ocupadas");
+            System.out.println("0. Volver al menú anterior");
 
-        int opcion = scanner.nextInt();
-        scanner.nextLine();
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
 
-        if (opcion == 0) {
-            System.out.println("Volviendo al menú anterior...");
-            return;
+            if (opcion == 0) {
+                System.out.println("Volviendo al menú anterior...");
+                return;
+            }
+
+            ArrayList<Habitacion> habitacionesObtenidas;
+
+            switch (opcion) {
+                case 1:
+                    habitacionesObtenidas = habitacionController.obtenerHabitaciones();
+                    CrearTabla.mostrarTabla(habitacionesObtenidas);
+                    break;
+                case 2:
+                    habitacionesObtenidas = habitacionController.filtroHabitacionesConReserva();
+                    CrearTabla.mostrarTabla(habitacionesObtenidas);
+
+                    break;
+                case 3:
+                    habitacionesObtenidas = habitacionController.filtroHabitacionesSinReserva();
+                    CrearTabla.mostrarTabla(habitacionesObtenidas);
+                    break;
+                case 4:
+                    habitacionesObtenidas = habitacionController.obtenerHabitacionesOcupadas();
+                    CrearTabla.mostrarTabla(habitacionesObtenidas);
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
+
+            System.out.println("\nPresione Enter para volver al menú anterior...");
+            scanner.nextLine();
         }
-
-        ArrayList<Habitacion> habitacionesObtenidas;
-
-        switch (opcion) {
-            case 1:
-                habitacionesObtenidas = habitacionController.obtenerHabitaciones();
-                CrearTabla.mostrarTabla(habitacionesObtenidas);
-                break;
-            case 2:
-                habitacionesObtenidas = habitacionController.filtroHabitacionesConReserva();
-                CrearTabla.mostrarTabla(habitacionesObtenidas);
-
-                break;
-            case 3:
-                habitacionesObtenidas = habitacionController.filtroHabitacionesSinReserva();
-                CrearTabla.mostrarTabla(habitacionesObtenidas);
-                break;
-            default:
-                System.out.println("Opción no válida.");
-                break;
-        }
-
-        System.out.println("\nPresione Enter para volver al menú anterior...");
-        scanner.nextLine();
     }
-}
 }

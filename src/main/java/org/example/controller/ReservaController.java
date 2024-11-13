@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.DAO.ReservaDAO;
-import org.example.model.Hotel;
 import org.example.model.Reserva;
 
 import java.sql.SQLException;

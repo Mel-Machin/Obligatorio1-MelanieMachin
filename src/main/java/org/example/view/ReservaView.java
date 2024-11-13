@@ -16,7 +16,7 @@ public class ReservaView {
 
     private Scanner scanner = ScannerSingleton.getInstance();
     private ReservaController reservaController;
-    private SimpleDateFormat formato = new SimpleDateFormat("YYYY-mm-dd");
+    private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     private HotelController hotelController;
     private HabitacionController habitacionController;
 
@@ -141,7 +141,7 @@ public class ReservaView {
                             observaciones = "Ninguna";
                         }
 
-                        Reserva reserva = new Reserva(idHuesped, idHotel, -1, estadoPago, fechaReservaD, fechaCheckInD, estadoCheckIn, fechaCheckOutD, estadoCheckOut, cantidadPersonas, observaciones);
+                        Reserva reserva = new Reserva(idHuesped, idHotel, estadoPago, fechaReservaD, fechaCheckInD, estadoCheckIn, fechaCheckOutD, estadoCheckOut, cantidadPersonas, observaciones);
                         int idReserva = this.reservaController.agregarReserva(reserva);
                         this.reservaController.agregarReservaHabitacion(idHabitacion, idReserva);
                         if (idReserva != -1) {
@@ -196,14 +196,9 @@ public class ReservaView {
 
                 System.out.println("Ingrese el nuevo ID del hotel (ingrese  0 si no desea modificar): ");
                 Integer nuevoIdHotel = scanner.nextInt();
+                scanner.nextLine();
                 if (nuevoIdHotel == 0) {
                     nuevoIdHotel = reservaActual.getIdHotel();
-                }
-
-                System.out.println("Ingrese el nuevo ID de la tarifa (ingrese 0 si no desea modificar): ");
-                Integer nuevoIdTarifa = scanner.nextInt();
-                if (nuevoIdTarifa == 0) {
-                    nuevoIdTarifa = reservaActual.getIdTarifa();
                 }
 
                 System.out.println("Ingrese el nuevo estado del pago (debe ser 'pendiente' o 'realizado'; deje vacío si no desea modificar): ");
@@ -265,7 +260,7 @@ public class ReservaView {
                 }
 
                 scanner.nextLine();
-                Reserva reservaModificada = new Reserva(nuevoIdHuesped, nuevoIdHotel, nuevoIdTarifa, nuevoEstadoPago, fechaReserva, fechaCheckIn, nuevoEstadoCheckIn, fechaCheckOut, nuevoEstadoCheckOut, nuevaCantidadPersonas, nuevaObservaciones);
+                Reserva reservaModificada = new Reserva(nuevoIdHuesped, nuevoIdHotel, nuevoEstadoPago, fechaReserva, fechaCheckIn, nuevoEstadoCheckIn, fechaCheckOut, nuevoEstadoCheckOut, nuevaCantidadPersonas, nuevaObservaciones);
                 if (reservaController.modificarReserva(idReserva, reservaModificada)) {
                     System.out.println("Reserva modificada con éxito.");
                 } else {

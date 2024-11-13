@@ -20,7 +20,6 @@ public class Reserva {
     private Integer cantidadPersonas;
     private String observacion;
 
-
     public Integer getIdReserva() {
         return idReserva;
     }
@@ -136,10 +135,9 @@ public class Reserva {
     public Reserva() {
     }
 
-    public Reserva(Integer idHuesped, Integer idHotel, Integer idTarifa, String estadoPago, Date fechaReserva, Date fechaCheckIn, String estadoCheckIn, Date fechaCheckOut, String estadoCheckOut, Integer cantidadPersonas, String observacion) {
+    public Reserva(Integer idHuesped, Integer idHotel, String estadoPago, Date fechaReserva, Date fechaCheckIn, String estadoCheckIn, Date fechaCheckOut, String estadoCheckOut, Integer cantidadPersonas, String observacion) {
         this.idHuesped = idHuesped;
         this.idHotel = idHotel;
-        this.idTarifa = idTarifa;
         this.estadoPago = estadoPago;
         this.fechaReserva = fechaReserva;
         this.fechaCheckIn = fechaCheckIn;

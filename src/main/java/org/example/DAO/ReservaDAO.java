@@ -15,15 +15,16 @@ public class ReservaDAO {
         this.connectionDB = new ConnectionDB();
     }
 
+    //Alta, Baja y Modificacion
     public int agregarReserva(Reserva reserva) {
-        String query = "INSERT INTO Reserva ( idHuesped, idHotel, estadoPago, fechaReserva, fechaCheckIn, estadoCheckIn, fechaCheckOut, estadoCheckOut, cantidadPersonas, observacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        int idReserva = connectionDB.executeUpdateAutoincrement(query, reserva.getIdHuesped(), reserva.getIdHotel(), reserva.getEstadoPago(), reserva.getFechaReserva(), reserva.getFechaCheckIn(), reserva.getEstadoCheckIn(), reserva.getFechaCheckOut(), reserva.getEstadoCheckOut(), reserva.getCantidadPersonas(), reserva.getObservacion());
+        String query = "INSERT INTO Reserva ( idHuesped, idHotel, estadoPago, fechaReserva, fechaCheckIn, estadoCheckIn, fechaCheckOut, estadoCheckOut, cantidadPersonas, observacion) VALUES (?, ?, ? ,?, ?, ?, ?, ?, ?, ?)";
+        int idReserva = connectionDB.executeUpdateAutoincrement(query, reserva.getIdHuesped(), reserva.getIdHotel(),reserva.getEstadoPago(), reserva.getFechaReserva(), reserva.getFechaCheckIn(), reserva.getEstadoCheckIn(), reserva.getFechaCheckOut(), reserva.getEstadoCheckOut(), reserva.getCantidadPersonas(), reserva.getObservacion());
         return idReserva;
     }
 
     public boolean modificarReserva(int idReserva, Reserva reserva) {
-        String query = "UPDATE Reserva SET idHuesped = ?,idHotel = ?,idTarifa = ?,estadoPago = ?,fechaReserva = ?,fechaCheckIn = ?,estadoCheckIn = ?,fechaCheckOut = ?,estadoCheckOut = ?,cantidadPersonas = ?,observacion = ?WHERE idReserva = ?";
-        int filasAfectadas = connectionDB.executeUpdate(query, reserva.getIdHuesped(), reserva.getIdHotel(), reserva.getIdTarifa(), reserva.getEstadoPago(), reserva.getFechaReserva(), reserva.getFechaCheckIn(), reserva.getEstadoCheckIn(), reserva.getFechaCheckOut(), reserva.getEstadoCheckOut(), reserva.getCantidadPersonas(), reserva.getObservacion(), idReserva);
+        String query = "UPDATE Reserva SET idHuesped = ?,idHotel = ?,estadoPago = ?,fechaReserva = ?,fechaCheckIn = ?,estadoCheckIn = ?,fechaCheckOut = ?,estadoCheckOut = ?,cantidadPersonas = ?,observacion = ? WHERE idReserva = ?";
+        int filasAfectadas = connectionDB.executeUpdate(query, reserva.getIdHuesped(), reserva.getIdHotel(), reserva.getEstadoPago(), reserva.getFechaReserva(), reserva.getFechaCheckIn(), reserva.getEstadoCheckIn(), reserva.getFechaCheckOut(), reserva.getEstadoCheckOut(), reserva.getCantidadPersonas(), reserva.getObservacion(), idReserva);
         return filasAfectadas > 0;
     }
 
@@ -33,6 +34,7 @@ public class ReservaDAO {
         return filasEliminadas > 0;
     }
 
+    //Obtener
     public ArrayList<Reserva> obtenerReservas() throws SQLException {
         ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
@@ -43,7 +45,7 @@ public class ReservaDAO {
             Reserva reserva = new Reserva();
             reserva.setIdReserva(rs.getInt("idReserva"));
             reserva.setIdHuesped(rs.getInt("idHuesped"));
-            Huesped huesped = new Huesped(null,rs.getString("nombre"),rs.getString("primerApellido"),null,null);
+            Huesped huesped = new Huesped(null, rs.getString("nombre"), rs.getString("primerApellido"), null, null);
             reserva.setHuesped(huesped);
             reserva.setIdHotel(rs.getInt("idHotel"));
             Hotel hotel = new Hotel(rs.getString("nombreHotel"), null, null);
@@ -65,14 +67,20 @@ public class ReservaDAO {
     }
 
     public Reserva obtenerReserva(int idReserva) throws SQLException {
-        String query = "SELECT * FROM Reserva WHERE idReserva = ?";
+        String query = "SELECT *, h.nombre, h.primerApellido, ho.nombre AS nombreHotel FROM Reserva r INNER JOIN Huesped h ON r.idHuesped = h.idHuesped INNER JOIN Hotel ho ON r.idHotel = ho.idHotel WHERE idReserva = ?";
         ResultSet rs = connectionDB.executeQuery(query, idReserva);
 
         while (rs != null && rs.next()) {
             Reserva reserva = new Reserva();
             reserva.setIdReserva(rs.getInt("idReserva"));
-            reserva.setIdReserva(rs.getInt("idHuesped"));
-            reserva.setIdReserva(rs.getInt("idHotel"));
+            reserva.setIdHuesped(rs.getInt("idHuesped"));
+            Huesped huesped = new Huesped(null, rs.getString("nombre"), rs.getString("primerApellido"), null, null);
+            reserva.setHuesped(huesped);
+            reserva.setIdHotel(rs.getInt("idHotel"));
+            Hotel hotel = new Hotel(rs.getString("nombreHotel"), null, null);
+            reserva.setHotel(hotel);
+            ArrayList<Habitacion> habitaciones = new HabitacionDAO().obtenerHabitacionesPorReserva(rs.getInt("idReserva"));
+            reserva.setHabitaciones(habitaciones);
             reserva.setIdTarifa(rs.getInt("idTarifa"));
             reserva.setEstadoPago(rs.getString("estadoPago"));
             reserva.setFechaReserva(rs.getDate("fechaReserva"));
@@ -88,13 +96,15 @@ public class ReservaDAO {
         return null;
     }
 
-    public boolean existeReserva(int idReserva) throws SQLException {
-        return obtenerReserva(idReserva) != null;
-    }
-
+    //Agregarle habitacion a la reserva
     public boolean agregarReservaHabitacion(int idHabitacion, int idReserva) {
         String query = "INSERT INTO habitacionreserva ( idHabitacion, idReserva) VALUES (?, ?)";
-        int filasAfectadas = connectionDB.executeUpdate(query,idHabitacion,idReserva);
-        return filasAfectadas>0;
+        int filasAfectadas = connectionDB.executeUpdate(query, idHabitacion, idReserva);
+        return filasAfectadas > 0;
+    }
+
+
+    public boolean existeReserva(int idReserva) throws SQLException {
+        return obtenerReserva(idReserva) != null;
     }
 }

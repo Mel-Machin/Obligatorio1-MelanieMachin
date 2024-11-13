@@ -40,6 +40,7 @@ public class HabitacionController {
     }
 
 
+
     public  ArrayList<TipoHabitacion> obtenerTipoHabitacionesHotelDisponibles(String fechaInicio, String fechaFin,int idHotel){
         try {
             return habitacionDAO.obtenerTipoHabitacionesHotelDisponibles(fechaInicio,fechaFin,idHotel);
@@ -57,11 +58,18 @@ public class HabitacionController {
         }
     }
 
-
     public ArrayList<Habitacion> obtenerHabitaciones(){
         try {
             return habitacionDAO.obtenerHabitaciones();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Habitacion> obtenerHabitacionesOcupadas(){
+        try{
+            return habitacionDAO.obtenerHabitacionesOcupadas();
+        }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }

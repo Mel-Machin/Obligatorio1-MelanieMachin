@@ -3,8 +3,6 @@ package org.example.view;
 import org.example.controller.HotelController;
 import org.example.model.Hotel;
 import org.example.model.ScannerSingleton;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -228,7 +226,7 @@ public class HotelView {
             }
 
             System.out.println("Datos actuales del Hotel: ");
-            ArrayList<Hotel> hotelTemporal = new ArrayList<>();
+            ArrayList<Hotel> hotelTemporal = new ArrayList<Hotel>();
             hotelTemporal.add(hotelActual);
             CrearTabla.mostrarTabla(hotelTemporal);
 

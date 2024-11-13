@@ -7,6 +7,7 @@ public class Tarifa {
     private Date fechaInicio;
     private Double precio;
     private Integer idTipoHabitacion;
+    private TipoHabitacion tipoHabitacion;
 
     public Integer getIdTarifa() {
         return idTarifa;
@@ -40,6 +41,14 @@ public class Tarifa {
         this.idTipoHabitacion = idTipoHabitacion;
     }
 
+    public TipoHabitacion getTipoHabitacion() {
+        return tipoHabitacion;
+    }
+
+    public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+        this.tipoHabitacion = tipoHabitacion;
+    }
+
     public Tarifa() {
     }
 
@@ -48,4 +57,6 @@ public class Tarifa {
         this.precio = precio;
         this.idTipoHabitacion = idTipoHabitacion;
     }
+
+
 }

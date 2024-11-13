@@ -41,4 +41,16 @@ public class TipoDocumento {
 
     public TipoDocumento() {
     }
+
+    public TipoDocumento(String abreviatura, String identificador, String codigoPaisOrigen) {
+        this.abreviatura = abreviatura;
+        this.identificador = identificador;
+        this.codigoPaisOrigen = codigoPaisOrigen;
+    }
+
+    @Override
+    public String toString(){
+        return this.abreviatura+ ": "+ this.identificador + " " + " Pais: " + this.codigoPaisOrigen;
+
+    }
 }
